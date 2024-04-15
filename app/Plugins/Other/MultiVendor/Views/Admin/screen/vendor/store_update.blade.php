@@ -129,16 +129,16 @@
                                 class="col-sm-2 col-form-label">{{ sc_language_render('store.logo') }}</label>
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="file" id="logo" name="logo"
+                                    <input type="text" id="logo" name="logo"
                                         value="{{ old('logo', $store['logo'] ?? '') }}" class="form-control logo"
                                         placeholder="" />
-                                    {{-- <div class="input-group-append">
+                                    <div class="input-group-append">
                                         <a data-input="logo" data-preview="preview_image" data-type="logo"
                                             class="btn btn-primary lfm">
                                             <i class="fa fa-image"></i>
                                             {{ sc_language_render('product.admin.choose_image') }}
                                         </a>
-                                    </div> --}}
+                                    </div>
                                 </div>
                                 @if ($errors->has('logo'))
                                     <span class="form-text">

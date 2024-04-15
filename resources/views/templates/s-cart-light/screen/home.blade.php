@@ -2,8 +2,8 @@
     /*
 $layout_page = home
 */
+    $title = 'home';
 @endphp
-
 @extends($sc_templatePath . '.layout')
 
 @section('block_main')
