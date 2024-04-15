@@ -1,30 +1,30 @@
 @php
-/*
+    /*
 $layout_page = shop_about
-**Variables:**
+    **Variables:**
 - $page: no paginate
-*/ 
+*/
 @endphp
 
-@extends($sc_templatePath.'.layout')
+@extends($sc_templatePath . '.layout')
 
 @section('block_main')
-<section class="section section-sm section-first bg-default text-md-left">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                {!! sc_html_render($page->content ?? '') !!}
+    <section class="section section-sm section-first bg-default text-md-left">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {!! sc_html_render($page->content ?? '') !!}
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endsection
 
 
 @push('styles')
-{{-- Your css style --}}
+    {{-- Your css style --}}
 @endpush
 
 @push('scripts')
-{{-- //script here --}}
+    {{-- //script here --}}
 @endpush

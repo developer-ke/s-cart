@@ -1,1 +1,1 @@
-@includeIf($sc_templatePath.'.common.render_block', ['positionBlock' => 'center'])
+@includeIf($sc_templatePath . '.common.render_block', ['positionBlock' => 'center'])
