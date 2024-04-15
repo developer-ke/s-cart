@@ -1,4 +1,3 @@
-@@ -0,0 +1,30 @@
 name: Deploy Kioja Project on push
 on:
   push:
