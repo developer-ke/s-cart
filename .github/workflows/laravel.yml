@@ -7,7 +7,10 @@ jobs:
   web-deploy:
     name: Deploy
     runs-on: ubuntu-latest
+       
     steps:
+      - name: Check Node.js version
+        run: node --version
       - name: Get the latest code
         uses: actions/checkout@v4
       - name: Setup Node.js
