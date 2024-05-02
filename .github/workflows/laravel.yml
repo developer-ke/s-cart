@@ -19,10 +19,16 @@ jobs:
           node-version: ${{matrix.node.version}}
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Dependencies
+        run: composer update --ignore-platform-reqs
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Generate storage link
+        run: php artisan storage:link
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
       - name: 📂 Sync files
-        uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
