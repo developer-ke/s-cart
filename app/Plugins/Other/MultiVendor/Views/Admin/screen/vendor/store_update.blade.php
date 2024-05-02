@@ -228,12 +228,12 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-map-marked"></i></span>
+                                            <p>Hold and drag the marker to your store's location.</p>
                                         </div>
                                     </div>
-                                    <input type="text" id="address" name="address"
-                                        value="{{ old('address', $store['address'] ?? '') }}" class="form-control"
-                                        placeholder="" />
+                                    <div id="map" style="width: 100%; height:200px;"></div>
+                                    <input type="text" id="latitude" name="latitude" hidden>
+                                    <input type="text" id="longitude" name="longitude" hidden>
                                 </div>
                                 @if ($errors->has('address'))
                                     <span class="form-text">
@@ -396,6 +396,34 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('.select2').select2()
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        document.getElementById('latitude').value = latitude;
+                        document.getElementById('longitude').value = longitude;
+                        var map = L.map('map').setView([latitude, longitude], 24);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
+
+                        var marker = L.marker([latitude, longitude], {
+                            draggable: true
+                        }).addTo(map);
+
+                        marker.on('dragend', function(event) {
+                            var position = marker.getLatLng();
+                            document.getElementById('latitude').value = position.lat;
+                            document.getElementById('longitude').value = position.lng;
+                        });
+
+                    },
+                    function(error) {
+                        console.error("Error getting location:", error);
+                    }
+                );
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
         });
     </script>
 @endpush

@@ -5,28 +5,28 @@
  */
 Route::group(
     [
-        'prefix' => SC_ADMIN_PREFIX.'/MultiVendor',
+        'prefix' => SC_ADMIN_PREFIX . '/MultiVendor',
         'middleware' => SC_ADMIN_MIDDLEWARE,
         'namespace' => 'App\Plugins\Other\MultiVendor\Admin\Controllers\Root',
-    ], 
+    ],
     function () {
         //Store
         Route::group(['prefix' => 'store'], function () {
             Route::get('/', 'AdminRootVendorStoreController@index')
-            ->name('admin_MultiVendor.index');
+                ->name('admin_MultiVendor.index');
             Route::get('/create', 'AdminRootVendorStoreController@create')
-            ->name('admin_MultiVendor.create');
+                ->name('admin_MultiVendor.create');
             Route::post('/create', 'AdminRootVendorStoreController@postCreate');
             Route::post('/delete', 'AdminRootVendorStoreController@delete')
-            ->name('admin_MultiVendor.delete');
+                ->name('admin_MultiVendor.delete');
             Route::get('/config/{id}', 'AdminRootVendorStoreController@config')
-            ->name('admin_MultiVendor.config');
+                ->name('admin_MultiVendor.config');
         });
 
         //Vendor
         Route::group(['prefix' => 'vendor'], function () {
             Route::get('/', 'AdminRootVendorUserController@index')
-            ->name('admin_MultiVendorUser.index');
+                ->name('admin_MultiVendorUser.index');
             Route::get('/create', 'AdminRootVendorUserController@create');
             Route::post('/create', 'AdminRootVendorUserController@postCreate')
                 ->name('admin_MultiVendorUser.create');
@@ -42,10 +42,10 @@ Route::group(
             Route::get('/', 'AdminRootVendorConfigController@index')
                 ->name('admin_MultiVendorConfig.index');
         });
-        
+
         //Report
         Route::any('/report', 'AdminRootVendorReportController@index')
-        ->name('admin_MultiVendorReport.index');
+            ->name('admin_MultiVendorReport.index');
     }
 );
 
@@ -60,7 +60,7 @@ if (sc_config_global('MultiVendor') && sc_get_domain_root() == sc_process_domain
             'prefix' => config('MultiVendor.admin_path'),
             'middleware' => ['web', 'vendor'],
             'namespace' => 'App\Plugins\Other\MultiVendor\Admin\Controllers',
-        ], 
+        ],
         function () {
 
             if (sc_config_global('MultiVendor_allow_register')) {
@@ -78,13 +78,13 @@ if (sc_config_global('MultiVendor') && sc_get_domain_root() == sc_process_domain
             Route::get('logout', 'Auth\LoginController@getLogout')->name('vendor.logout');
         }
     );
-    
+
     Route::group(
         [
             'prefix' => config('MultiVendor.admin_path'),
             'middleware' => ['web', 'vendor'],
             'namespace' => 'App\Plugins\Other\MultiVendor\Admin\Controllers\Vendor',
-        ], 
+        ],
         function () {
 
             //Language
@@ -98,7 +98,6 @@ if (sc_config_global('MultiVendor') && sc_get_domain_root() == sc_process_domain
             Route::get('deny_single', 'DashboardVendorController@denySingle')->name('vendor_admin.deny_single');
             Route::get('account_inactive', 'DashboardVendorController@accountInactive')->name('vendor_admin.account_inactive');
 
-
             Route::group(['middleware' => ['checkVendorActive', 'checkStoreExist']], function () {
 
                 Route::get('/', 'DashboardVendorController@index')->name('vendor_admin.home');
@@ -111,47 +110,47 @@ if (sc_config_global('MultiVendor') && sc_get_domain_root() == sc_process_domain
                             'uses' => 'LfmController@show',
                             'as' => 'unisharp.lfm.show',
                         ]);
-                    
+
                         // display integration error messages
                         Route::get('/errors', [
                             'uses' => 'LfmController@getErrors',
                             'as' => 'unisharp.lfm.getErrors',
                         ]);
-                    
+
                         // upload
                         Route::post('/upload', [
                             'uses' => 'UploadController@upload',
                             'as' => 'unisharp.lfm.upload',
                         ]);
-                    
+
                         // list images & files
                         Route::get('/jsonitems', [
                             'uses' => 'ItemsController@getItems',
                             'as' => 'unisharp.lfm.getItems',
                         ]);
-                    
+
                         Route::get('/move', [
                             'uses' => 'ItemsController@move',
                             'as' => 'unisharp.lfm.move',
                         ]);
-                    
+
                         Route::get('/domove', [
                             'uses' => 'ItemsController@domove',
                             'as' => 'unisharp.lfm.domove',
                         ]);
-                    
+
                         // folders
                         Route::get('/newfolder', [
                             'uses' => 'FolderController@getAddfolder',
                             'as' => 'unisharp.lfm.getAddfolder',
                         ]);
-                    
+
                         // list folders
                         Route::get('/folders', [
                             'uses' => 'FolderController@getFolders',
                             'as' => 'unisharp.lfm.getFolders',
                         ]);
-                    
+
                         // crop
                         Route::get('/crop', [
                             'uses' => 'CropController@getCrop',
@@ -165,13 +164,13 @@ if (sc_config_global('MultiVendor') && sc_get_domain_root() == sc_process_domain
                             'uses' => 'CropController@getNewCropimage',
                             'as' => 'unisharp.lfm.getCropimage',
                         ]);
-                    
+
                         // rename
                         Route::get('/rename', [
                             'uses' => 'RenameController@getRename',
                             'as' => 'unisharp.lfm.getRename',
                         ]);
-                    
+
                         // scale/resize
                         Route::get('/resize', [
                             'uses' => 'ResizeController@getResize',
@@ -181,13 +180,13 @@ if (sc_config_global('MultiVendor') && sc_get_domain_root() == sc_process_domain
                             'uses' => 'ResizeController@performResize',
                             'as' => 'unisharp.lfm.performResize',
                         ]);
-                    
+
                         // download
                         Route::get('/download', [
                             'uses' => 'DownloadController@getDownload',
                             'as' => 'unisharp.lfm.getDownload',
                         ]);
-                    
+
                         // delete
                         Route::get('/delete', [
                             'uses' => 'DeleteController@getDelete',
@@ -197,19 +196,19 @@ if (sc_config_global('MultiVendor') && sc_get_domain_root() == sc_process_domain
                 }
 
                 Route::group(['prefix' => '/order'], function () {
-                        Route::get('/', 'AdminVendorOrderController@index')->name('admin_mvendor_order.index');
-                        Route::get('/detail/{id}', 'AdminVendorOrderController@edit')->name('admin_mvendor_order.detail');
-                        Route::post('/update', 'AdminVendorOrderController@postOrderUpdate')->name('admin_mvendor_order.update');
-                    }
+                    Route::get('/', 'AdminVendorOrderController@index')->name('admin_mvendor_order.index');
+                    Route::get('/detail/{id}', 'AdminVendorOrderController@edit')->name('admin_mvendor_order.detail');
+                    Route::post('/update', 'AdminVendorOrderController@postOrderUpdate')->name('admin_mvendor_order.update');
+                }
                 );
                 Route::group(['prefix' => '/category'], function () {
-                        Route::get('/', 'AdminVendorCategoryController@index')->name('admin_mvendor_category.index');
-                        Route::get('create', 'AdminVendorCategoryController@create')->name('admin_mvendor_category.create');
-                        Route::post('/create', 'AdminVendorCategoryController@postCreate')->name('admin_mvendor_category.create');
-                        Route::get('/edit/{id}', 'AdminVendorCategoryController@edit')->name('admin_mvendor_category.edit');
-                        Route::post('/edit/{id}', 'AdminVendorCategoryController@postEdit')->name('admin_mvendor_category.edit');
-                        Route::post('/delete', 'AdminVendorCategoryController@deleteList')->name('admin_mvendor_category.delete');
-                    }
+                    Route::get('/', 'AdminVendorCategoryController@index')->name('admin_mvendor_category.index');
+                    Route::get('create', 'AdminVendorCategoryController@create')->name('admin_mvendor_category.create');
+                    Route::post('/create', 'AdminVendorCategoryController@postCreate')->name('admin_mvendor_category.create');
+                    Route::get('/edit/{id}', 'AdminVendorCategoryController@edit')->name('admin_mvendor_category.edit');
+                    Route::post('/edit/{id}', 'AdminVendorCategoryController@postEdit')->name('admin_mvendor_category.edit');
+                    Route::post('/delete', 'AdminVendorCategoryController@deleteList')->name('admin_mvendor_category.delete');
+                }
                 );
 
                 Route::group(['prefix' => 'product'], function () {
@@ -232,20 +231,20 @@ if (sc_config_global('MultiVendor') && sc_get_domain_root() == sc_process_domain
                     Route::get('/edit/{id}', 'AdminVendorBannerController@edit')->name('admin_mvendor_banner.edit');
                     Route::post('/edit/{id}', 'AdminVendorBannerController@postEdit')->name('admin_mvendor_banner.edit');
                     Route::post('/delete', 'AdminVendorBannerController@deleteList')->name('admin_mvendor_banner.delete');
-                });        
+                });
 
                 //vendor create store
                 Route::group(
                     [
                         'prefix' => 'vendor_update',
-                    ], 
+                    ],
                     function () {
                         Route::get('/', 'AdminVendorInfoController@vendorUpdate')
                             ->name('admin_mvendor_info.update');
                         Route::post('/', 'AdminVendorInfoController@vendorPostUpdate');
                     }
                 );
-            });           
+            });
         }
     );
 }
@@ -253,7 +252,7 @@ if (sc_config_global('MultiVendor') && sc_get_domain_root() == sc_process_domain
 //Front-end
 if (sc_config_global('MultiVendor')) {
     // Multi vendor only active for vendor root
-    if(config('app.storeId') == SC_ID_ROOT) {
+    if (config('app.storeId') == SC_ID_ROOT) {
         /**
          * Route shop
          */
@@ -261,7 +260,7 @@ if (sc_config_global('MultiVendor')) {
             [
                 'prefix' => config('MultiVendor.front_path'),
                 'namespace' => 'App\Plugins\Other\MultiVendor\Controllers',
-            ], 
+            ],
             function () {
                 Route::get('/{code?}', 'FrontController@vendorDetail')->name('MultiVendor.detail');
             }
@@ -273,10 +272,10 @@ if (sc_config_global('MultiVendor')) {
         [
             'prefix' => $prefixCategoryvendor,
             'namespace' => 'App\Plugins\Other\MultiVendor\Controllers',
-        ], 
+        ],
         function () {
             Route::get('/{alias}/{storeId}.html', 'FrontController@categoryVendorDetail')->name('MultiVendor_category.detail');
         }
     );
-    
+
 }

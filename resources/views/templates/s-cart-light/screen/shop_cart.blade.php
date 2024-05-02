@@ -1,7 +1,7 @@
 @php
     /*
 $layout_page = shop_cart
-            **Variables:**
+                                    **Variables:**
 - $cart: no paginate
 - $countries: array
 - $attributesGroup: array
@@ -70,7 +70,6 @@ $layout_page = shop_cart
 
 
 @push('scripts')
-    {{-- //script here --}}
 @endpush
 
 @push('styles')
