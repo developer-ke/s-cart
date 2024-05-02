@@ -1,4 +1,4 @@
-name: Deploy Kioja Project on push
+name: Kioja staging
 on:
   push:
     branches:
@@ -16,11 +16,11 @@ jobs:
       - name: Setup Node.js 
         uses: actions/setup-node@v2  
         with:
-          node-version: ${{matrix.node.version}}
+          node-version: '20'
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
-        run: composer update 
+        run: composer install 
       - name: Generate key
         run: php artisan key:generate
       - name: Generate storage link
